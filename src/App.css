@@ -73,6 +73,18 @@ nav .dropdown.position-relative .dropdown-menu {
   .navbar .collapse { order: 1; }
 }
 
+/* Open dropdown on hover for desktop (let React-Bootstrap manage ARIA and click for touch) */
+@media (hover: hover) and (pointer: fine) {
+  .navbar .nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: .25rem;
+  }
+  /* keep correct visibility when using react-bootstrap's .show class */
+  .navbar .nav-item.dropdown > .dropdown-menu {
+    display: none;
+  }
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

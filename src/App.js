@@ -5,10 +5,12 @@ import { Navbar, Nav, NavDropdown, Container, Carousel } from 'react-bootstrap';
 import switchImg from './assets/img/switch_2.jpg';
 import ps5Img from './assets/img/1366_2000.jpg';
 import steamImg from './assets/img/Steam-Deck.jpg';
+import { consolas, perifericos, juegos } from './menuData';
 
 
 function App() {
   // keep simple state only for future needs
+  // let react-bootstrap manage dropdown state; use CSS for hover in desktop
   useEffect(() => {
     // Inject external stylesheet for custom styles and Bootstrap
     const head = document.head;
@@ -54,19 +56,24 @@ function App() {
           <Navbar.Toggle aria-controls="main-navbar" />
           <Navbar.Collapse id="main-navbar" className="justify-content-center">
             <Nav>
-              <Nav.Link href="/Juegos/juegos.html">Juegos</Nav.Link>
+              {juegos.map((item) => (
+                <Nav.Link key={item.file} href={`/Juegos/${item.file}`}>{item.name}</Nav.Link>
+              ))}
+              {/* Submenu: CSS hover will open on desktop; react-bootstrap handles click/tap */}
               <NavDropdown title="Consolas" id="nav-dropdown-consolas">
-                <NavDropdown.Item href="/Consolas/PlayStation.html">PlayStation</NavDropdown.Item>
-                <NavDropdown.Item href="/Consolas/Nintendo.html">Nintendo</NavDropdown.Item>
-                <NavDropdown.Item href="/Consolas/Xbox.html">Xbox</NavDropdown.Item>
-                <NavDropdown.Item href="/Consolas/Portable.html">Portable</NavDropdown.Item>
+                {consolas.map((item) => (
+                  <NavDropdown.Item key={item.file} href={`/Consolas/${item.file}`}>
+                    {item.name}
+                  </NavDropdown.Item>
+                ))}
               </NavDropdown>
+
               <NavDropdown title="Periféricos" id="nav-dropdown-perifericos">
-                <NavDropdown.Item href="/Perifericos/TECLADO.html">Teclado</NavDropdown.Item>
-                <NavDropdown.Item href="/Perifericos/MOUSE.html">Mouse</NavDropdown.Item>
-                <NavDropdown.Item href="/Perifericos/AUDIFONOS.html">Audífonos</NavDropdown.Item>
-                <NavDropdown.Item href="/Perifericos/VOLANTES.html">Volantes</NavDropdown.Item>
-                <NavDropdown.Item href="/Perifericos/CONTROLES.html">Controles</NavDropdown.Item>
+                {perifericos.map((item) => (
+                  <NavDropdown.Item key={item.file} href={`/Perifericos/${item.file}`}>
+                    {item.name}
+                  </NavDropdown.Item>
+                ))}
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
