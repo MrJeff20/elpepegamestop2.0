@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown, Container, Col, Row } from 'react-bootstrap';
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
+import ContactForm from './components/ContactForm';
 
 function AppNavbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -72,7 +73,7 @@ function AppNavbar() {
                 <i className="fas fa-gamepad me-2"></i> Controles
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#contacto" className="nav-link-custom">
+            <Nav.Link onClick={() => navigate('/contacto')} className="nav-link-custom">
               <i className="fas fa-envelope me-1"></i> Contacto
             </Nav.Link>
           </Nav>
@@ -95,6 +96,7 @@ function App() {
           <Route path="/perifericos/audifonos" element={<CategoryPage category="audifonos" />} />
           <Route path="/perifericos/volantes" element={<CategoryPage category="volantes" />} />
           <Route path="/perifericos/controles" element={<CategoryPage category="controles" />} />
+          <Route path="/contacto" element={<ContactForm />} />
         </Routes>
 
         <footer className="custom-footer">
