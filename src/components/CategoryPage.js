@@ -1,18 +1,25 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import productsData from '../data/products.json';
 import '../styles/CategoryPage.css';
 
-function CategoryPage({ category }) {
+function CategoryPage({ category, type = 'perifericos' }) {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   
   const categoryTitles = {
     'teclados': 'Teclados Gaming',
     'mouse': 'Mouse Gaming',
     'audifonos': 'Audífonos Gaming',
     'volantes': 'Volantes de Carreras',
-    'controles': 'Controles'
+    'controles': 'Controles',
+    'playstation': 'PlayStation',
+    'nintendo': 'Nintendo',
+    'xbox': 'Xbox',
+    'portable': 'Consolas Portátiles',
+    'ps5': 'Juegos PS5'
   };
 
   const categoryIcons = {
@@ -20,10 +27,15 @@ function CategoryPage({ category }) {
     'mouse': 'fa-mouse',
     'audifonos': 'fa-headphones',
     'volantes': 'fa-steering-wheel',
-    'controles': 'fa-gamepad'
+    'controles': 'fa-gamepad',
+    'playstation': 'fab fa-playstation',
+    'nintendo': 'fas fa-star',
+    'xbox': 'fab fa-xbox',
+    'portable': 'fas fa-mobile-alt',
+    'ps5': 'fas fa-ghost'
   };
 
-  const products = productsData.perifericos[category] || [];
+  const products = productsData[type]?.[category] || [];
 
   return (
     <div className="category-page">
@@ -81,6 +93,7 @@ function CategoryPage({ category }) {
                           variant={product.disponible ? "primary" : "secondary"}
                           disabled={!product.disponible}
                           className="buy-button"
+                          onClick={() => addToCart(product)}
                         >
                           {product.disponible ? (
                             <>

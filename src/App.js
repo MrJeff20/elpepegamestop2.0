@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, NavDropdown, Container, Col, Row } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Col, Row, Badge, Button, Offcanvas } from 'react-bootstrap';
 import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
+import ShoppingCart from './components/ShoppingCart';
 import ContactForm from './components/ContactForm';
+import { CartProvider, useCart } from './context/CartContext';
 
-function AppNavbar() {
+function AppNavbar({ onContactClick }) {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const { getCartItemsCount, toggleCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,8 +22,8 @@ function AppNavbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleCategoryClick = (category) => {
-    navigate(`/perifericos/${category}`);
+  const handleCategoryClick = (category, type = 'perifericos') => {
+    navigate(`/${type}/${category}`);
   };
 
   return (
@@ -38,21 +41,23 @@ function AppNavbar() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
-          <Nav className="ms-auto">
-            <Nav.Link href="#juegos" className="nav-link-custom">
-              <i className="fas fa-ghost me-1"></i> Juegos
-            </Nav.Link>
+          <Nav className="ms-auto align-items-center">
+            <NavDropdown title={<><i className="fas fa-ghost me-1"></i> Juegos</>} id="nav-dropdown-juegos" className="nav-dropdown-custom">
+              <NavDropdown.Item onClick={() => handleCategoryClick('ps5', 'juegos')}>
+                <i className="fab fa-playstation me-2"></i> PlayStation 5
+              </NavDropdown.Item>
+            </NavDropdown>
             <NavDropdown title={<><i className="fas fa-tv me-1"></i> Consolas</>} id="nav-dropdown-consolas" className="nav-dropdown-custom">
-              <NavDropdown.Item href="#playstation">
+              <NavDropdown.Item onClick={() => handleCategoryClick('playstation', 'consolas')}>
                 <i className="fab fa-playstation me-2"></i> PlayStation
               </NavDropdown.Item>
-              <NavDropdown.Item href="#nintendo">
+              <NavDropdown.Item onClick={() => handleCategoryClick('nintendo', 'consolas')}>
                 <i className="fas fa-star me-2"></i> Nintendo
               </NavDropdown.Item>
-              <NavDropdown.Item href="#xbox">
+              <NavDropdown.Item onClick={() => handleCategoryClick('xbox', 'consolas')}>
                 <i className="fab fa-xbox me-2"></i> Xbox
               </NavDropdown.Item>
-              <NavDropdown.Item href="#portable">
+              <NavDropdown.Item onClick={() => handleCategoryClick('portable', 'consolas')}>
                 <i className="fas fa-mobile-alt me-2"></i> Portátil
               </NavDropdown.Item>
             </NavDropdown>
@@ -73,9 +78,25 @@ function AppNavbar() {
                 <i className="fas fa-gamepad me-2"></i> Controles
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link onClick={() => navigate('/contacto')} className="nav-link-custom">
+            <Nav.Link onClick={onContactClick} className="nav-link-custom" style={{ cursor: 'pointer' }}>
               <i className="fas fa-envelope me-1"></i> Contacto
             </Nav.Link>
+            <Button 
+              variant="outline-light" 
+              className="cart-button ms-2 position-relative"
+              onClick={toggleCart}
+            >
+              <i className="fas fa-shopping-cart"></i>
+              {getCartItemsCount() > 0 && (
+                <Badge 
+                  bg="danger" 
+                  pill 
+                  className="position-absolute top-0 start-100 translate-middle"
+                >
+                  {getCartItemsCount()}
+                </Badge>
+              )}
+            </Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -83,21 +104,42 @@ function AppNavbar() {
   );
 }
 
-function App() {
+function AppContent() {
+  const [showContact, setShowContact] = useState(false);
+
+  const toggleContact = () => setShowContact(!showContact);
+  const closeContact = () => setShowContact(false);
+
   return (
-    <Router>
-      <div className="App">
-        <AppNavbar />
-        
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/perifericos/teclados" element={<CategoryPage category="teclados" />} />
-          <Route path="/perifericos/mouse" element={<CategoryPage category="mouse" />} />
-          <Route path="/perifericos/audifonos" element={<CategoryPage category="audifonos" />} />
-          <Route path="/perifericos/volantes" element={<CategoryPage category="volantes" />} />
-          <Route path="/perifericos/controles" element={<CategoryPage category="controles" />} />
-          <Route path="/contacto" element={<ContactForm />} />
-        </Routes>
+    <div className="App">
+      <AppNavbar onContactClick={toggleContact} />
+      <ShoppingCart />
+      
+      <Offcanvas show={showContact} onHide={closeContact} placement="end" className="contact-offcanvas">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            <i className="fas fa-envelope me-2"></i>
+            Formulario de Contacto
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <ContactForm onClose={closeContact} />
+        </Offcanvas.Body>
+      </Offcanvas>
+      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/perifericos/teclados" element={<CategoryPage category="teclados" type="perifericos" />} />
+        <Route path="/perifericos/mouse" element={<CategoryPage category="mouse" type="perifericos" />} />
+        <Route path="/perifericos/audifonos" element={<CategoryPage category="audifonos" type="perifericos" />} />
+        <Route path="/perifericos/volantes" element={<CategoryPage category="volantes" type="perifericos" />} />
+        <Route path="/perifericos/controles" element={<CategoryPage category="controles" type="perifericos" />} />
+        <Route path="/consolas/playstation" element={<CategoryPage category="playstation" type="consolas" />} />
+        <Route path="/consolas/nintendo" element={<CategoryPage category="nintendo" type="consolas" />} />
+        <Route path="/consolas/xbox" element={<CategoryPage category="xbox" type="consolas" />} />
+        <Route path="/consolas/portable" element={<CategoryPage category="portable" type="consolas" />} />
+        <Route path="/juegos/ps5" element={<CategoryPage category="ps5" type="juegos" />} />
+      </Routes>
 
         <footer className="custom-footer">
           <Container>
@@ -145,7 +187,16 @@ function App() {
             </Row>
           </Container>
         </footer>
-      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
     </Router>
   );
 }
