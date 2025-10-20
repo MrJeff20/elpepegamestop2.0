@@ -440,6 +440,132 @@
         "categoria": "RPG",
         "modelo": "PS5 Game",
         "vendedor": "Sony"
+      },
+      {
+        "id": 39,
+        "nombre": "Yakuza 0 Director's Cut Switch 2",
+        "precio": "$64.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/0/1/0100867703914.jpeg",
+        "descripcion": "Yakuza 0 Director's Cut Switch 2",
+        "disponible": true,
+        "categoria": "Nintendo Switch 2",
+        "modelo": "Nintendo Switch 2",
+        "vendedor": "Nintendo"
+      },
+      {
+        "id": 40,
+        "nombre": "Rune Factory Guardians of Azume Switch 2",
+        "precio": "$84.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/8/5/8500622422893.jpeg",
+        "descripcion": "Rune Factory Guardians of Azume Switch 2",
+        "disponible": true,
+        "categoria": "RPG",
+        "modelo": "Nintendo Switch 2",
+        "vendedor": "Nintendo"
+      },
+      {
+        "id": 41,
+        "nombre": "Ratchet & Clank: Rift Apart PS5",
+        "precio": "$64.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/p/s/ps5_ratchet_clan.jpg",
+        "descripcion": "Ratchet & Clank: Rift Apart PS5",
+        "disponible": true,
+        "categoria": "Acción",
+        "modelo": "PS5 Game",
+        "vendedor": "Sony"
+      },
+      {
+        "id": 42,
+        "nombre": "Deathloop PS5",
+        "precio": "$24.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/d/e/deathloop_ps5.jpg",
+        "descripcion": "Deathloop PS5",
+        "disponible": true,
+        "categoria": "Acción",
+        "modelo": "PS5 Game",
+        "vendedor": "Sony"
+      },
+      {
+        "id": 43,
+        "nombre": "Shin Megami Tensei V: Vengeance PS5",
+        "precio": "$69.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/0/7/0730865220786-01.jpg",
+        "descripcion": "Shin Megami Tensei V: Vengeance PS5",
+        "disponible": true,
+        "categoria": "JRPG",
+        "modelo": "PS5 Game",
+        "vendedor": "Sony"
+      },
+      {
+        "id": 44,
+        "nombre": "Elden Ring Shadow of The Erdtree XBS",
+        "precio": "$79.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/7/2/722674550048-01.jpg",
+        "descripcion": "Elden Ring Shadow of The Erdtree XBS",
+        "disponible": true,
+        "categoria": "RPG",
+        "modelo": "Xbox Series",
+        "vendedor": "Xbox"
+      },      {
+        "id": 45,
+        "nombre": "Dragon Ball Sparking! ZERO XBS",
+        "precio": "$74.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/7/2/722674240574-01.jpg",
+        "descripcion": "Dragon Ball Sparking! ZERO XBS",
+        "disponible": true,
+        "categoria": "Lucha",
+        "modelo": "Xbox Series",
+        "vendedor": "Xbox"
+      },      {
+        "id": 46,
+        "nombre": "SChivalry 2 Xbox One",
+        "precio": "$34.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/8/1/8168190182930_2.jpeg",
+        "descripcion": "Chivalry 2 Xbox One",
+        "disponible": true,
+        "categoria": "Hack and Slash",
+        "modelo": "Xbox One",
+        "vendedor": "Xbox"
+      },      {
+        "id": 47,
+        "nombre": "Robocop: Rogue City XBS",
+        "precio": "$64.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/8/1/814290018849-01.jpg",
+        "descripcion": "Robocop: Rogue City XBS",
+        "disponible": true,
+        "categoria": "FPS",
+        "modelo": "Xbox Series",
+        "vendedor": "Xbox"
+      },      {
+        "id": 48,
+        "nombre": "Avatar: Frontiers of Pandora XBS",
+        "precio": "$74.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/8/8/887256113537-01.jpg",
+        "descripcion": "Avatar: Frontiers of Pandora XBS",
+        "disponible": true,
+        "categoria": "Aventura",
+        "modelo": "Xbox Series",
+        "vendedor": "Xbox"
+      },      {
+        "id": 49,
+        "nombre": "Mortal Kombat 1 Premium Edition XBS",
+        "precio": "$119.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/p/v/pvmk1pexbs-01.jpg",
+        "descripcion": "Mortal Kombat 1 Premium Edition XBS",
+        "disponible": true,
+        "categoria": "lucha",
+        "modelo": "Xbox Series",
+        "vendedor": "Xbox"
+      },      {
+        "id": 50,
+        "nombre": "Payday 3 XBS",
+        "precio": "$42.990",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/8/1/810086922406-01.jpg",
+        "descripcion": "Payday 3 XBS",
+        "disponible": true,
+        "categoria": "FPS",
+        "modelo": "Xbox Series",
+        "vendedor": "Xbox"
       }
     ]
   }
