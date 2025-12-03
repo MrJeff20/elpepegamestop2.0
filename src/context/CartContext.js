@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import * as apiService from '../services/api';
 
 const CartContext = createContext();
 
@@ -13,8 +14,41 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const addToCart = (product) => {
+  // Obtener el usuario actual (puedes implementar autenticación más adelante)
+  const getUserId = () => {
+    return localStorage.getItem('userId') || 'guest';
+  };
+
+  // Cargar el carrito desde el backend al iniciar
+  useEffect(() => {
+    const loadCart = async () => {
+      const userId = getUserId();
+      if (userId && userId !== 'guest') {
+        try {
+          setLoading(true);
+          const carritoData = await apiService.getCarrito(userId);
+          // Adaptar la estructura del carrito del backend al formato local
+          if (carritoData && carritoData.items) {
+            setCartItems(carritoData.items);
+          }
+        } catch (err) {
+          console.error('Error al cargar el carrito:', err);
+          // Si falla, usar carrito local
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    loadCart();
+  }, []);
+
+  const addToCart = async (product) => {
+    const userId = getUserId();
+    
+    // Actualizar estado local inmediatamente para mejor UX
     setCartItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
@@ -26,26 +60,79 @@ export const CartProvider = ({ children }) => {
       }
       return [...prevItems, { ...product, quantity: 1 }];
     });
+
+    // Si hay usuario autenticado, sincronizar con el backend
+    if (userId && userId !== 'guest') {
+      try {
+        await apiService.agregarAlCarrito(userId, product.id, 1);
+      } catch (err) {
+        console.error('Error al agregar al carrito en el backend:', err);
+        setError('Error al agregar al carrito');
+      }
+    }
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = async (productId) => {
+    const userId = getUserId();
+
+    // Actualizar estado local
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+
+    // Sincronizar con backend si hay usuario autenticado
+    if (userId && userId !== 'guest') {
+      try {
+        await apiService.eliminarDelCarrito(userId, productId);
+      } catch (err) {
+        console.error('Error al eliminar del carrito en el backend:', err);
+        setError('Error al eliminar del carrito');
+      }
+    }
   };
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = async (productId, quantity) => {
     if (quantity <= 0) {
       removeFromCart(productId);
       return;
     }
+
+    const userId = getUserId();
+    
+    // Actualizar estado local
     setCartItems(prevItems =>
       prevItems.map(item =>
         item.id === productId ? { ...item, quantity } : item
       )
     );
+
+    // Sincronizar con backend
+    if (userId && userId !== 'guest') {
+      try {
+        // Primero eliminar el producto actual
+        await apiService.eliminarDelCarrito(userId, productId);
+        // Luego agregarlo con la nueva cantidad
+        await apiService.agregarAlCarrito(userId, productId, quantity);
+      } catch (err) {
+        console.error('Error al actualizar cantidad en el backend:', err);
+        setError('Error al actualizar cantidad');
+      }
+    }
   };
 
-  const clearCart = () => {
+  const clearCart = async () => {
+    const userId = getUserId();
+    
+    // Actualizar estado local
     setCartItems([]);
+
+    // Sincronizar con backend
+    if (userId && userId !== 'guest') {
+      try {
+        await apiService.vaciarCarrito(userId);
+      } catch (err) {
+        console.error('Error al vaciar carrito en el backend:', err);
+        setError('Error al vaciar carrito');
+      }
+    }
   };
 
   const getCartTotal = () => {
@@ -73,7 +160,9 @@ export const CartProvider = ({ children }) => {
     getCartItemsCount,
     showCart,
     setShowCart,
-    toggleCart
+    toggleCart,
+    loading,
+    error
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

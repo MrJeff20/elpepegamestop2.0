@@ -1,13 +1,17 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Button, Badge, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import * as apiService from '../services/api';
 import productsData from '../data/products.json';
 import '../styles/CategoryPage.css';
 
 function CategoryPage({ category, type = 'perifericos' }) {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   const categoryTitles = {
     'teclados': 'Teclados Gaming',
@@ -35,7 +39,56 @@ function CategoryPage({ category, type = 'perifericos' }) {
     'ps5': 'fas fa-ghost'
   };
 
-  const products = productsData[type]?.[category] || [];
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Mapear categorías del frontend al formato del backend
+        const categoryMap = {
+          'teclados': 'Teclados',
+          'mouse': 'Mouse',
+          'audifonos': 'Audífonos',
+          'volantes': 'Volantes',
+          'controles': 'Controles',
+          'playstation': 'PlayStation',
+          'nintendo': 'Nintendo',
+          'xbox': 'Xbox',
+          'portable': 'Portátil',
+          'ps5': 'PS5'
+        };
+
+        const backendCategory = categoryMap[category] || category;
+
+        // Intentar obtener productos del backend
+        const productosBackend = await apiService.getProductosPorCategoria(backendCategory);
+        
+        if (productosBackend && productosBackend.length > 0) {
+          setProducts(productosBackend);
+        } else {
+          // Fallback: usar datos locales
+          const localProducts = productsData[type]?.[category] || [];
+          if (localProducts.length > 0) {
+            setProducts(localProducts);
+          } else {
+            setProducts([]);
+          }
+        }
+      } catch (err) {
+        console.error('Error al cargar productos:', err);
+        setError('Error al cargar productos desde el servidor');
+        
+        // Usar productos locales como fallback
+        const localProducts = productsData[type]?.[category] || [];
+        setProducts(localProducts);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, [category, type]);
 
   return (
     <div className="category-page">
@@ -60,62 +113,75 @@ function CategoryPage({ category, type = 'perifericos' }) {
       </div>
 
       <Container className="py-5">
-        <Row className="g-4">
-          {products.length > 0 ? (
-            products.map((product) => (
-              <Col key={product.id} xs={12} sm={6} lg={4}>
-                <Card className="product-card-detail h-100">
-                  <div className="product-image-container">
-                    <Card.Img 
-                      variant="top" 
-                      src={product.imagen} 
-                      alt={product.nombre}
-                      className="product-image-detail"
-                    />
-                    {!product.disponible && (
-                      <Badge bg="danger" className="unavailable-badge">
-                        Agotado
+        {error && (
+          <Alert variant="warning" className="mb-4">
+            {error} - Mostrando productos de ejemplo
+          </Alert>
+        )}
+
+        {loading ? (
+          <div className="text-center py-5">
+            <Spinner animation="border" variant="primary" />
+            <p className="mt-3">Cargando productos...</p>
+          </div>
+        ) : (
+          <Row className="g-4">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <Col key={product.id} xs={12} sm={6} lg={4}>
+                  <Card className="product-card-detail h-100">
+                    <div className="product-image-container">
+                      <Card.Img 
+                        variant="top" 
+                        src={product.imagen} 
+                        alt={product.nombre}
+                        className="product-image-detail"
+                      />
+                      {!product.disponible && (
+                        <Badge bg="danger" className="unavailable-badge">
+                          Agotado
+                        </Badge>
+                      )}
+                      <Badge bg="info" className="category-badge">
+                        {product.categoria}
                       </Badge>
-                    )}
-                    <Badge bg="info" className="category-badge">
-                      {product.categoria}
-                    </Badge>
-                  </div>
-                  <Card.Body className="d-flex flex-column">
-                    <Card.Title className="product-name">{product.nombre}</Card.Title>
-                    <Card.Text className="product-description">
-                      {product.descripcion}
-                    </Card.Text>
-                    <div className="mt-auto">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h4 className="product-price mb-0">{product.precio}</h4>
-                        <Button 
-                          variant={product.disponible ? "primary" : "secondary"}
-                          disabled={!product.disponible}
-                          className="buy-button"
-                          onClick={() => addToCart(product)}
-                        >
-                          {product.disponible ? (
-                            <>
-                              <i className="fas fa-shopping-cart me-2"></i>
-                              Agregar
-                            </>
-                          ) : (
-                            'No Disponible'
-                          )}
-                        </Button>
-                      </div>
                     </div>
-                  </Card.Body>
-                </Card>
+                    <Card.Body className="d-flex flex-column">
+                      <Card.Title className="product-name">{product.nombre}</Card.Title>
+                      <Card.Text className="product-description">
+                        {product.descripcion}
+                      </Card.Text>
+                      <div className="mt-auto">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h4 className="product-price mb-0">{product.precio}</h4>
+                          <Button 
+                            variant={product.disponible ? "primary" : "secondary"}
+                            disabled={!product.disponible}
+                            className="buy-button"
+                            onClick={() => addToCart(product)}
+                          >
+                            {product.disponible ? (
+                              <>
+                                <i className="fas fa-shopping-cart me-2"></i>
+                                Agregar
+                              </>
+                            ) : (
+                              'No Disponible'
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))
+            ) : (
+              <Col xs={12} className="text-center">
+                <p className="no-products">No hay productos disponibles en esta categoría</p>
               </Col>
-            ))
-          ) : (
-            <Col xs={12} className="text-center">
-              <p className="no-products">No hay productos disponibles en esta categoría</p>
-            </Col>
-          )}
-        </Row>
+            )}
+          </Row>
+        )}
       </Container>
     </div>
   );
