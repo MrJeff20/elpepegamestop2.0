@@ -7,9 +7,11 @@ import Home from './components/Home';
 import CategoryPage from './components/CategoryPage';
 import ShoppingCart from './components/ShoppingCart';
 import ContactForm from './components/ContactForm';
+import UserRegister from './components/UserRegister';
+import UserLogin from './components/UserLogin';
 import { CartProvider, useCart } from './context/CartContext';
 
-function AppNavbar({ onContactClick }) {
+function AppNavbar({ onContactClick, onRegisterClick, onLoginClick }) {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const { getCartItemsCount, toggleCart } = useCart();
@@ -39,6 +41,15 @@ function AppNavbar({ onContactClick }) {
           <i className="fas fa-gamepad me-2"></i>
           ElPepe Gamestop
         </Navbar.Brand>
+        <Button 
+          variant="outline-light" 
+          size="sm"
+          className="ms-2 d-none d-lg-inline-block"
+          onClick={onLoginClick}
+        >
+          <i className="fas fa-sign-in-alt me-1"></i>
+          Login
+        </Button>
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
           <Nav className="ms-auto align-items-center">
@@ -81,6 +92,9 @@ function AppNavbar({ onContactClick }) {
             <Nav.Link onClick={onContactClick} className="nav-link-custom" style={{ cursor: 'pointer' }}>
               <i className="fas fa-envelope me-1"></i> Contacto
             </Nav.Link>
+            <Nav.Link onClick={onRegisterClick} className="nav-link-custom" style={{ cursor: 'pointer' }}>
+              <i className="fas fa-user-plus me-1"></i> Registro
+            </Nav.Link>
             <Button 
               variant="outline-light" 
               className="cart-button ms-2 position-relative"
@@ -106,13 +120,21 @@ function AppNavbar({ onContactClick }) {
 
 function AppContent() {
   const [showContact, setShowContact] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   const toggleContact = () => setShowContact(!showContact);
   const closeContact = () => setShowContact(false);
+  
+  const toggleRegister = () => setShowRegister(!showRegister);
+  const closeRegister = () => setShowRegister(false);
+  
+  const toggleLogin = () => setShowLogin(!showLogin);
+  const closeLogin = () => setShowLogin(false);
 
   return (
     <div className="App">
-      <AppNavbar onContactClick={toggleContact} />
+      <AppNavbar onContactClick={toggleContact} onRegisterClick={toggleRegister} onLoginClick={toggleLogin} />
       <ShoppingCart />
       
       <Offcanvas show={showContact} onHide={closeContact} placement="end" className="contact-offcanvas">
@@ -124,6 +146,30 @@ function AppContent() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ContactForm onClose={closeContact} />
+        </Offcanvas.Body>
+      </Offcanvas>
+      
+      <Offcanvas show={showRegister} onHide={closeRegister} placement="end" className="contact-offcanvas">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            <i className="fas fa-user-plus me-2"></i>
+            Registro de Usuario
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <UserRegister onClose={closeRegister} />
+        </Offcanvas.Body>
+      </Offcanvas>
+      
+      <Offcanvas show={showLogin} onHide={closeLogin} placement="end" className="contact-offcanvas">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            <i className="fas fa-sign-in-alt me-2"></i>
+            Iniciar Sesión
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <UserLogin onClose={closeLogin} />
         </Offcanvas.Body>
       </Offcanvas>
       
