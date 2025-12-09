@@ -559,3 +559,114 @@ body {
 
 
 }
+
+/* ==================== USER AUTH STYLES ==================== */
+.user-login-form,
+.user-register-form {
+  padding: 1rem 0;
+}
+
+.navbar .text-light {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.user-welcome-link {
+  transition: all 0.3s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.user-welcome-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.user-welcome-link strong {
+  text-decoration: underline;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+/* ==================== USER PROFILE PAGE ==================== */
+.user-profile-page {
+  min-height: 100vh;
+  padding-top: 100px;
+  background: linear-gradient(to bottom, #0f0f0f 0%, #1a1a1a 100%);
+}
+
+.profile-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.profile-card .card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.profile-avatar {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.profile-card .card-body {
+  background: var(--card-bg);
+  color: var(--text-light);
+}
+
+.profile-info {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.info-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.info-value {
+  color: #ffffff;
+  font-size: 1.1rem;
+  padding-left: 1.5rem;
+}
+
+@media (max-width: 991.98px) {
+  .custom-navbar .text-light {
+    display: block !important;
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+  
+  .custom-navbar .btn {
+    margin: 0.5rem auto !important;
+    display: block;
+  }
+  
+  .user-welcome-link {
+    display: block !important;
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+
+  .user-profile-page {
+    padding-top: 80px;
+  }
+}
+
