@@ -42,7 +42,7 @@ function UserRegister({ onClose }) {
 
     try {
       const response = await registrarUsuario({
-        nombre: formData.nombre,
+        name: formData.nombre,
         email: formData.email,
         password: formData.password
       });
