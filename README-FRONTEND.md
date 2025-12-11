@@ -2,6 +2,8 @@
 
 Frontend de la aplicación ElPepe Gamestop desarrollado con React.
 
+(Esto es solo para que detecte el nuevo cambio para la Branch nueva)
+
 ## 🚀 Inicio Rápido
 
 ```bash
