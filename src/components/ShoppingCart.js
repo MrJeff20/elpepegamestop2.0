@@ -10,8 +10,12 @@ function ShoppingCart() {
     updateQuantity, 
     getCartTotal, 
     showCart, 
+<<<<<<< HEAD
     setShowCart,
     clearCart 
+=======
+    setShowCart 
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
   } = useCart();
 
   const handleClose = () => setShowCart(false);
@@ -105,6 +109,7 @@ function ShoppingCart() {
                   ${getCartTotal().toLocaleString('es-CL')}
                 </h4>
               </div>
+<<<<<<< HEAD
               <Button 
                 variant="outline-danger" 
                 size="lg" 
@@ -114,6 +119,8 @@ function ShoppingCart() {
                 <i className="fas fa-trash-alt me-2"></i>
                 Vaciar Carrito
               </Button>
+=======
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
               <Button variant="primary" size="lg" className="w-100 checkout-btn">
                 <i className="fas fa-credit-card me-2"></i>
                 Proceder al Pago

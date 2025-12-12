@@ -257,6 +257,7 @@ export const actualizarUsuario = async (id, usuarioData) => {
   }
 };
 
+<<<<<<< HEAD
 /**
  * Actualizar perfil del usuario autenticado
  */
@@ -270,6 +271,8 @@ export const actualizarPerfil = async (usuarioData) => {
   }
 };
 
+=======
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
 // ==================== PEDIDOS ====================
 
 /**

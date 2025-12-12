@@ -9,15 +9,22 @@ import ShoppingCart from './components/ShoppingCart';
 import ContactForm from './components/ContactForm';
 import UserRegister from './components/UserRegister';
 import UserLogin from './components/UserLogin';
+<<<<<<< HEAD
 import UserProfile from './components/UserProfile';
 import { CartProvider, useCart } from './context/CartContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
+=======
+import { CartProvider, useCart } from './context/CartContext';
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
 
 function AppNavbar({ onContactClick, onRegisterClick, onLoginClick }) {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const { getCartItemsCount, toggleCart } = useCart();
+<<<<<<< HEAD
   const { user, isAuthenticated, logout } = useAuth();
+=======
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,10 +38,13 @@ function AppNavbar({ onContactClick, onRegisterClick, onLoginClick }) {
     navigate(`/${type}/${category}`);
   };
 
+<<<<<<< HEAD
   const handleLogout = () => {
     logout();
   };
 
+=======
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
   return (
     <Navbar 
       bg="dark" 
@@ -48,6 +58,7 @@ function AppNavbar({ onContactClick, onRegisterClick, onLoginClick }) {
           <i className="fas fa-gamepad me-2"></i>
           ElPepe Gamestop
         </Navbar.Brand>
+<<<<<<< HEAD
         {isAuthenticated && (
           <span 
             className="text-light ms-2 d-none d-lg-inline-block user-welcome-link"
@@ -78,6 +89,17 @@ function AppNavbar({ onContactClick, onRegisterClick, onLoginClick }) {
             Login
           </Button>
         )}
+=======
+        <Button 
+          variant="outline-light" 
+          size="sm"
+          className="ms-2 d-none d-lg-inline-block"
+          onClick={onLoginClick}
+        >
+          <i className="fas fa-sign-in-alt me-1"></i>
+          Login
+        </Button>
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
           <Nav className="ms-auto align-items-center">
@@ -203,7 +225,10 @@ function AppContent() {
       
       <Routes>
         <Route path="/" element={<Home />} />
+<<<<<<< HEAD
         <Route path="/perfil" element={<UserProfile />} />
+=======
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
         <Route path="/perifericos/teclados" element={<CategoryPage category="teclados" type="perifericos" />} />
         <Route path="/perifericos/mouse" element={<CategoryPage category="mouse" type="perifericos" />} />
         <Route path="/perifericos/audifonos" element={<CategoryPage category="audifonos" type="perifericos" />} />
@@ -269,11 +294,17 @@ function AppContent() {
 function App() {
   return (
     <Router>
+<<<<<<< HEAD
       <AuthProvider>
         <CartProvider>
           <AppContent />
         </CartProvider>
       </AuthProvider>
+=======
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+>>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
     </Router>
   );
 }
