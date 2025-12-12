@@ -189,7 +189,13 @@ export const vaciarCarrito = async (usuarioId) => {
  */
 export const registrarUsuario = async (usuarioData) => {
   try {
-    const response = await api.post('/usuarios/registro', usuarioData);
+    // Mapear 'nombre' a 'name' para Xano
+    const requestData = {
+      name: usuarioData.nombre,
+      email: usuarioData.email,
+      password: usuarioData.password
+    };
+    const response = await api.post('/usuarios/registro', requestData);
     return response.data;
   } catch (error) {
     console.error('Error al registrar usuario:', error);
@@ -257,7 +263,6 @@ export const actualizarUsuario = async (id, usuarioData) => {
   }
 };
 
-<<<<<<< HEAD
 /**
  * Actualizar perfil del usuario autenticado
  */
@@ -271,8 +276,6 @@ export const actualizarPerfil = async (usuarioData) => {
   }
 };
 
-=======
->>>>>>> ec1ded1d0aee34a82b7d681b1a264713b60b0c7c
 // ==================== PEDIDOS ====================
 
 /**
@@ -314,4 +317,27 @@ export const getPedidoById = async (pedidoId) => {
   }
 };
 
-export default api;
+// Export default con todas las funciones agrupadas
+const apiService = {
+  getAllProductos,
+  getProductoById,
+  searchProductos,
+  getProductosDestacados,
+  getProductosOferta,
+  getProductosPorCategoria,
+  getCarrito,
+  agregarAlCarrito,
+  eliminarDelCarrito,
+  vaciarCarrito,
+  registrarUsuario,
+  login,
+  loginFormatted,
+  getUsuario,
+  actualizarUsuario,
+  actualizarPerfil,
+  crearPedido,
+  getPedidosUsuario,
+  getPedidoById
+};
+
+export default apiService;

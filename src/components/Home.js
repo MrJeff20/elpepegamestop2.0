@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Carousel, Card, Button, Row, Col, Badge, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import ApiService from '../services/ApiService';
+import ApiService from '../services/api';
 import switchImg from '../assets/img/switch_2.jpg';
 import ps5Img from '../assets/img/1366_2000.jpg';
 import steamImg from '../assets/img/Steam-Deck.jpg';
